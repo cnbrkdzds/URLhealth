@@ -1,0 +1,41 @@
+﻿@using URLhealth.Entities.Concrete
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+@model List<URLhealth.Entities.DTO.UrlDTO>
+
+@{
+    ViewData["Title"] = "URL Monitoring";
+    string name = "";
+    int uid = 0;
+    USERS sessionManager = null;
+    var value = HttpContextAccessor.HttpContext.Session.GetString("SessionManager");
+
+    short logged = 0;
+
+    if (value != null)
+    {
+        sessionManager = JsonConvert.DeserializeObject<USERS>(value);
+        if (sessionManager != null)
+        {
+            uid = sessionManager.ID;
+            logged = 1;
+            name = sessionManager.MAIL;
+        }
+        else
+        {
+            Context.Response.Redirect("/Home/Index");
+        }
+    }
+    else
+    {
+        Context.Response.Redirect("/Home/Index");
+    }
+    ViewData["Name"] = name;
+
+}
+<h1>Privacy</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>

@@ -1,0 +1,15 @@
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\bin\Debug\net5.0\URLhealth.Entities.deps.json
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\bin\Debug\net5.0\URLhealth.Entities.dll
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\bin\Debug\net5.0\ref\URLhealth.Entities.dll
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\bin\Debug\net5.0\URLhealth.Entities.pdb
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\bin\Debug\net5.0\URLhealth.Core.dll
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\bin\Debug\net5.0\URLhealth.Core.pdb
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\obj\Debug\net5.0\URLhealth.Entities.csproj.AssemblyReference.cache
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\obj\Debug\net5.0\URLhealth.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\obj\Debug\net5.0\URLhealth.Entities.AssemblyInfoInputs.cache
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\obj\Debug\net5.0\URLhealth.Entities.AssemblyInfo.cs
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\obj\Debug\net5.0\URLhealth.Entities.csproj.CoreCompileInputs.cache
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\obj\Debug\net5.0\URLhealth.Entities.csproj.CopyComplete
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\obj\Debug\net5.0\URLhealth.Entities.dll
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\obj\Debug\net5.0\ref\URLhealth.Entities.dll
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Entities\obj\Debug\net5.0\URLhealth.Entities.pdb

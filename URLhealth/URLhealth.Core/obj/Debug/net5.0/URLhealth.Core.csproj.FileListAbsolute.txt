@@ -1,0 +1,12 @@
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Core\bin\Debug\net5.0\URLhealth.Core.deps.json
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Core\bin\Debug\net5.0\URLhealth.Core.dll
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Core\bin\Debug\net5.0\ref\URLhealth.Core.dll
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Core\bin\Debug\net5.0\URLhealth.Core.pdb
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Core\obj\Debug\net5.0\URLhealth.Core.csproj.AssemblyReference.cache
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Core\obj\Debug\net5.0\URLhealth.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Core\obj\Debug\net5.0\URLhealth.Core.AssemblyInfoInputs.cache
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Core\obj\Debug\net5.0\URLhealth.Core.AssemblyInfo.cs
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Core\obj\Debug\net5.0\URLhealth.Core.csproj.CoreCompileInputs.cache
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Core\obj\Debug\net5.0\URLhealth.Core.dll
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Core\obj\Debug\net5.0\ref\URLhealth.Core.dll
+C:\Users\DIZDAS\source\GitHub\URLhealth\URLhealth\URLhealth.Core\obj\Debug\net5.0\URLhealth.Core.pdb

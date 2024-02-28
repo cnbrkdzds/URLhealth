@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33529.622
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLhealth.Core", "URLhealth.Core\URLhealth.Core.csproj", "{AA09250B-547C-456E-95EB-2E3C3FAD2802}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLhealth.DAL", "URLhealth.DAL\URLhealth.DAL.csproj", "{6C22D850-815D-4304-A357-839B8F82B618}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLhealth.BLL", "URLhealth.BLL\URLhealth.BLL.csproj", "{0004B0D0-44CC-4029-B8C1-4B511911BE0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLhealth.Entities", "URLhealth.Entities\URLhealth.Entities.csproj", "{38696092-4D64-4AF1-912A-3944019C7173}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLhealth.Web.UI", "URLhealth.Web.UI\URLhealth.Web.UI.csproj", "{2AEAF1B8-DDA3-4B09-AA20-EEC99A30B319}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "URLhealth.UTILITIES", "URLhealth.UTILITIES\URLhealth.UTILITIES.csproj", "{F32FF44D-DE9D-4FBC-85BD-A179B06AAC8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA09250B-547C-456E-95EB-2E3C3FAD2802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA09250B-547C-456E-95EB-2E3C3FAD2802}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA09250B-547C-456E-95EB-2E3C3FAD2802}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA09250B-547C-456E-95EB-2E3C3FAD2802}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C22D850-815D-4304-A357-839B8F82B618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C22D850-815D-4304-A357-839B8F82B618}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C22D850-815D-4304-A357-839B8F82B618}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C22D850-815D-4304-A357-839B8F82B618}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0004B0D0-44CC-4029-B8C1-4B511911BE0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0004B0D0-44CC-4029-B8C1-4B511911BE0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0004B0D0-44CC-4029-B8C1-4B511911BE0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0004B0D0-44CC-4029-B8C1-4B511911BE0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38696092-4D64-4AF1-912A-3944019C7173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38696092-4D64-4AF1-912A-3944019C7173}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38696092-4D64-4AF1-912A-3944019C7173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38696092-4D64-4AF1-912A-3944019C7173}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AEAF1B8-DDA3-4B09-AA20-EEC99A30B319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AEAF1B8-DDA3-4B09-AA20-EEC99A30B319}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AEAF1B8-DDA3-4B09-AA20-EEC99A30B319}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AEAF1B8-DDA3-4B09-AA20-EEC99A30B319}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F32FF44D-DE9D-4FBC-85BD-A179B06AAC8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F32FF44D-DE9D-4FBC-85BD-A179B06AAC8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F32FF44D-DE9D-4FBC-85BD-A179B06AAC8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F32FF44D-DE9D-4FBC-85BD-A179B06AAC8B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {69C99C6C-F962-4A40-A7FF-AF632CA70B33}
+	EndGlobalSection
+EndGlobal

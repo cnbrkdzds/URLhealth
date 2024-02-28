@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\URLhealth.DAL\URLhealth.DAL.csproj" />
+    <ProjectReference Include="..\URLhealth.Entities\URLhealth.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

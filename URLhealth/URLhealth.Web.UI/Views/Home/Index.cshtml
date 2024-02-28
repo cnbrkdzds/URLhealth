@@ -1,0 +1,476 @@
+﻿@using URLhealth.Entities.Concrete
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+@model List<URLhealth.Entities.DTO.UrlDTO>
+
+@{
+    ViewData["Title"] = "URL Monitoring";
+    string name = "";
+    int uid = 0;
+    USERS sessionManager = null;
+    var value = HttpContextAccessor.HttpContext.Session.GetString("SessionManager");
+
+    short logged = 0;
+
+    if (value != null)
+    {
+        sessionManager = JsonConvert.DeserializeObject<USERS>(value);
+        if (sessionManager != null)
+        {
+            uid = sessionManager.ID;
+            logged = 1;
+            name = sessionManager.MAIL;
+        }
+    }
+    ViewData["Name"] = name;
+
+}
+
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+
+<script>
+    var uid = @uid;
+    var logged = @logged;
+
+    var connection = new signalR.HubConnectionBuilder().configureLogging(signalR.LogLevel.Information).withAutomaticReconnect().withUrl("https://localhost:44395/UrlHubs").build();
+
+    $(document).ready(function () {
+
+
+
+
+        statusShowOK();
+        start();
+        function statusShowOK() {
+            //console.log(connection.connectionState);
+            //console.log("bağlandınız");
+        }
+        function statusShowFail() {
+            //console.log(connection.connectionState);
+            //console.log("bağlanılmaya çalışılıyor");
+        }
+
+        function start() {
+            connection.start().then(() => {
+                statusShowOK();
+
+                connection.invoke("JoinRoom", "Room" + uid).catch((errRoom) => { console.log(err); })
+
+            }).catch((err) => {
+                //console.log(err);
+                setTimeout(() => Start(), 2000);
+            })
+        }
+        //Subscribes - bağlantı hareketleri
+        connection.onreconnecting(err => {
+            statusShowFail();
+            //console.log("onreconnecting: " + err);
+        })
+        connection.onreconnected(connectionId => {
+            statusShowOK();
+            //console.log("ConnectionId : " + connectionId);
+        })
+        connection.onclose(() => {
+            statusShowOK();
+            start();
+        })
+
+        connection.on("ReceiveClientCount", (response) => {
+            //console.log("izleyen Sayısı: " + response.clientCount);
+        })
+
+
+        connection.on("PingResult", (url, active, id) => {
+            var situation = "";
+            var color = "";
+            if (active == true) { situation = "On"; color = "green"; } else { situation = "Off"; color = "red"; }
+            $('#lblOnOff_' + id).text(situation);
+            $("#lblOnOff_" + id).prev().css("color", color);
+            //console.log(url + ' : ' + active);
+        })
+
+
+        if (logged == 0) {
+            //sign in/up modal will be showed
+
+            $('#modalSignIn').modal({ backdrop: 'static', keyboard: false });
+            $('#modalSignIn').modal('show');
+        }
+
+    });
+
+
+    function SignInUp(type) {
+        var url = '';
+        var mail = $('#MODALMAIL').val();
+
+        if (mail != '') {
+
+            $('#btnSignIn').prop('disabled', true);
+            $('#btnSignUp').prop('disabled', true);
+
+            if (type == 0) {
+                url = '/Home/SignUp';
+            }
+            else if (type == 1) {
+                url = '/Home/SignIn';
+            }
+
+            var data = new FormData();
+            data.append('MAIL', mail);
+
+            $.ajax({
+                url: url,
+                type: "post",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (e) {
+
+                    if (e.success == true) {
+
+                        swal({
+                            title: "Başarılı",
+                            text: "Giriş Başarılı.",
+                            icon: "success",
+                        });
+                        //sign up gerçekleştikten sonra otomatik giriş de yapılıyor.
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 500);
+                    }
+
+                    else {
+                        var message = "";
+                        if (type == 0) {
+                            message = "E-Posta Adresiniz Sistemde Kayıtlı.";
+                        }
+                        else {
+                            message = "Kayıt Bulunamadı";
+                        }
+                        swal({
+                            title: "Uyarı",
+                            text: message,
+                            icon: "warning",
+                        });
+                    }
+
+
+
+                    $('#btnSignIn').prop('disabled', false);
+                    $('#btnSignUp').prop('disabled', false);
+
+                },
+                error: function (e) {
+                    swal({
+                        title: "Hata",
+                        text: "İşlem Sırasında Hata Oluştu. Lütfen Tekrar Deneyiniz",
+                        icon: "success",
+                    });
+
+                    $('#btnSignIn').prop('disabled', false);
+                    $('#btnSignUp').prop('disabled', false);
+                }
+            });
+        }
+        else {
+
+            swal({
+                title: "Uyarı",
+                text: "Lütfen E-Posta Adresinizi Giriniz",
+                icon: "warning",
+            });
+        }
+    }
+
+
+    function UrlEkleModal(i) {
+
+        $('#MODALURLID').val(i);
+
+        if (i == 0) {
+            $('#lblUrlModalTitle').text('URL Ekle');
+            $('#MODALURL').val('');
+            $('#MODALREFRESH').val('0');
+        }
+
+        else {
+            $('#lblUrlModalTitle').text('URL Güncelle');
+
+            $.ajax({
+                url: "/Home/GetByIdUrl?id=" + i,
+                type: "Get",
+                success: function (e) {
+                    $('#MODALURL').val(e.URL_LINK);
+                    $('#MODALREFRESH').val(e.TIMER);
+                },
+                error: function (e) {
+                    swal({
+                        title: "Hata",
+                        text: "İşlem Sırasında Hata Oluştu.",
+                        icon: "error",
+                    });
+                }
+            });
+
+            //getbyId çalışacak;
+        }
+        $('#modalUrl').modal('show');
+    }
+
+    function SaveURL() {
+        var id = $('#MODALURLID').val();
+        var urlName = $('#MODALURL').val();
+        var refresh = $('#MODALREFRESH').val();
+
+        var url = '';
+        if (id > 0) {
+            url = '/Home/UpdateUrl';
+        }
+        else {
+            url = '/Home/AddUrl';
+        }
+
+        if (urlName != '' && refresh != '' && refresh > 0) {
+
+            $('#btnCancel').prop('disabled', true);
+            $('#btnSave').prop('disabled', true);
+
+            var data = new FormData();
+            data.append('ID', id);
+            data.append('URL_LINK', urlName);
+            data.append('TIMER', refresh);
+            $.ajax({
+                url: url,
+                type: "post",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (e) {
+
+                    if (e.success == true) {
+
+                        //sign up gerçekleştikten sonra otomatik giriş de yapılıyor.
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 500);
+                    }
+
+                    swal({
+                        title: "Başarılı",
+                        text: "İşlem Başarıyla Tamamlandı.",
+                        icon: "success",
+                    });
+
+                    $('#btnCancel').prop('disabled', false);
+                    $('#btnSave').prop('disabled', false);
+
+                },
+                error: function (e) {
+                    swal({
+                        title: "Hata",
+                        text: "İşlem Sırasında Hata Oluştu. Lütfen Tekrar Deneyiniz.",
+                        icon: "error",
+                    });
+
+                    $('#btnCancel').prop('disabled', false);
+                    $('#btnSave').prop('disabled', false);
+                }
+            });
+        }
+        else{
+            swal({
+                title: "Uyarı",
+                text: "Lütfen Tüm Alanları Doldurunuz.",
+                icon: "warning",
+            });
+        }
+
+    }
+
+
+
+    function Sil(id) {
+
+        swal({
+            title: "Onay Bekleniyor",
+            text: "Seçili Kaydı Silmek İstediğinize Emin Misiniz?",
+            icon: "warning",
+            buttons: [
+                'Vazgeç',
+                'Onayla'
+            ]
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                //swal({
+                //    title: "Başarılı.",
+                //    text: "Başarıyla Silindi",
+                //    icon: "success",
+                //});
+            } else {
+                var url = "/Home/DeleteUrl";
+
+                var data = new FormData();
+                data.append('id', id);
+
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    //data: JSON.stringify(data),
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    //contentType: "application/json; charset=utf-8",
+                    success: function (e) {
+
+
+                        if (e.success == true) {
+
+
+                            swal({
+                                title: "Başarılı",
+                                text: "Başarıyla Silindi",
+                                icon: "success",
+                            });
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 500);
+                        }
+                        else {
+                            swal({
+                                title: "Hata",
+                                text: "İşlem Sırasında Hata Oluştu.",
+                                icon: "error",
+                            });
+                        }
+                    },
+                    error: function (e) {
+                        swal({
+                            title: "Hata",
+                            text: "İşlem Sırasında Hata Oluştu.",
+                            icon: "error",
+                        });
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+
+@if (sessionManager != null)
+{
+    <div class="row">
+
+        <form>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="UrlEkleModal(0);">URL Ekle</button>
+            </div>
+        </form>
+
+    </div>
+}
+
+<div class="row">
+
+    <table class="table table-striped table-bordered" id="myTable">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">URL Link</th>
+                <th scope="col">İstek Aralığı(dk)</th>
+                <th scope="col">On / Off</th>
+                <th scope="col">İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                short ctr = 1;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@ctr</th>
+                        <td>@item.URL_LINK</td>
+                        <td>@item.TIMER</td>
+                        <td><label id="lblOnOff_@item.ID" style="color:green;"></label></td>
+                        <td>
+                            <button class="btn btn-success btn-sm" onclick="UrlEkleModal(@item.ID)">Güncelle</button>
+                            <button class="btn btn-danger btn-sm" onclick="Sil(@item.ID)">Sil</button>
+                        </td>
+                    </tr>
+
+                    ctr++;
+                }
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalSignIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="#" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><label id="lblTitle">Giriş Yap / Üye Ol</label></h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="MODALMAIL">E-Posta</label> <br />
+                        <input type="text" class="form-control" id="MODALMAIL" value="" name="MODALMAIL" required>
+                        <div class="valid-feedback">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnSignUp" onclick="SignInUp(0);">Üye Ol</button>
+                    <button type="button" class="btn btn-primary" id="btnSignIn" onclick="SignInUp(1);">Giriş Yap</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalUrl" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="#" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><label id="lblUrlModalTitle">Url Ekle / Güncelle</label></h5>
+
+                    <input type="text" class="form-control" id="MODALURLID" value="" name="MODALURLID" required hidden>
+
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="MODALURL">URL Link</label> <br />
+                        <input type="text" class="form-control" id="MODALURL" value="" name="MODALURL" required>
+                        <div class="valid-feedback">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="MODALREFRESH">Refresh Süresi(dk)</label> <br />
+                        <input type="number" class="form-control" id="MODALREFRESH" value="" name="MODALREFRESH" required>
+                        <div class="valid-feedback">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnCancel" data-dismiss="modal">Vazgeç</button>
+                    <button type="button" class="btn btn-primary" id="btnSave" onclick="SaveURL();">Kaydet</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

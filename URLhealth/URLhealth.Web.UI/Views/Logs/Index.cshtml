@@ -1,0 +1,65 @@
+﻿@model List<URLhealth.Entities.Concrete.LOGS>
+
+@using URLhealth.Entities.Concrete
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "URL Monitoring";
+    string name = "";
+    int uid = 0;
+    USERS sessionManager = null;
+    var value = HttpContextAccessor.HttpContext.Session.GetString("SessionManager");
+
+    short logged = 0;
+
+    if (value != null)
+    {
+        sessionManager = JsonConvert.DeserializeObject<USERS>(value);
+        if (sessionManager != null)
+        {
+            uid = sessionManager.ID;
+            logged = 1;
+            name = sessionManager.MAIL;
+        }
+    }
+    else
+    {
+        Context.Response.Redirect("/Home/Index");
+    }
+    ViewData["Name"] = name;
+
+}
+
+
+@if (Model != null)
+{
+    long ctr = 1;
+
+    <div class="row">
+        <table class="table table-striped table-bordered" id="myTable">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Başlık</th>
+                    <th scope="col">Operasyon</th>
+                    <th scope="col">Mesaj</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@ctr</th>
+                        <td>@item.LEVEL</td>
+                        <td>@item.URL</td>
+                        <td>@item.MESSAGE</td>
+                    </tr>
+
+                    ctr++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
